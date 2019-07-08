@@ -1,0 +1,16 @@
+- hosts: master
+  tasks:
+    - name: creating name spaces
+      shell: sudo kubectl create -f /home/kube/namespace/staging-namespace.yml
+      shell: sudo kubectl create -f /home/kube/namespace/production-namespace.yml
+
+    - name: Installing metrics
+      shell: sudo kubectl create -f /home/kube/metrics/deploy/1.8+/
+
+    - name: Installing application 
+      shell: sudo kubectl create -f /home/kube/guestbook/* -n staging 
+      shell: sudo kubectl create -f /home/kube/guestbook/* -n production 
+
+    - name: Installing Autoscaling
+      shell: sudo kubectl create -f /home/kube/Autoscaling/frontend-pod-prod-autosaling.yml
+      shell: sudo kubectl create -f /home/kube/Autoscaling/frontend-pod-prod-autosaling.yml
